@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Lista.h"
+#include "Pila.h"
 using namespace std;
 
 void burbuja(double* arr, int n) {
@@ -50,31 +50,30 @@ void ordenar(double* arr, int n){
 }
 
 int main() {
-    Lista est;
+    Pila est;
     int opcion;
 
     do {
-        std::cout<<"\n=== TIENDA DE ROPA ==="<<std::endl;
+        std::cout<<"\n=== REGISTRO DE PACIENTES ==="<<std::endl;
         std::cout<<"1. Agregar"<<std::endl;
         std::cout<<"2. Ver todos"<<std::endl;
         std::cout<<"3. Quitar/Atender"<<std::endl;
-        std::cout<<"4. Ordenar por precio"<<std::endl;
+        std::cout<<"4. Ordenar por edad"<<std::endl;
         std::cout<<"5. Salir"<<std::endl;
         std::cout<<"Opcion: "; std::cin>>opcion;
 
         if(opcion==1){
         std::string nombre; std::cout<<"nombre: "; std::cin>>nombre;
-        std::string talla; std::cout<<"talla: "; std::cin>>talla;
-        double precio; std::cout<<"precio: "; std::cin>>precio;
-        int cantidad; std::cout<<"cantidad: "; std::cin>>cantidad;
-            est.agregar(new Prenda(nombre, talla, precio, cantidad));
+        double edad; std::cout<<"edad: "; std::cin>>edad;
+        std::string diagnostico; std::cout<<"diagnostico: "; std::cin>>diagnostico;
+        int habitacion; std::cout<<"habitacion: "; std::cin>>habitacion;
+            est.push(new Paciente(nombre, edad, diagnostico, habitacion));
             std::cout<<"Registro agregado."<<std::endl;
         } else if(opcion==2){
             est.mostrar();
         } else if(opcion==3){
-        est.mostrar();
-        int idx; std::cout<<"Indice a eliminar: "; std::cin>>idx;
-        est.eliminar(idx);
+        Paciente* e = est.pop();
+        if(e){ std::cout<<"Removido: "<<std::endl; e->mostrarDatos(); delete e; }
         } else if(opcion==4){
             double arr[50]; int n;
             est.copiarCampo(arr, n);
