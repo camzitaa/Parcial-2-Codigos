@@ -1,16 +1,16 @@
 #pragma once
-#include "Libro.h"
+#include "Prenda.h"
 
 // LISTA estatica con arreglo
 class Lista {
 private:
     static const int MAX = 50;
-    Libro* datos[MAX];
+    Prenda* datos[MAX];
     int cantidad;
 public:
     Lista() : cantidad(0) {}
 
-    void agregar(Libro* e) {
+    void agregar(Prenda* e) {
         if(cantidad < MAX) datos[cantidad++]=e;
         else std::cout<<"Lista llena."<<std::endl;
     }
@@ -32,7 +32,7 @@ public:
 
     void mostrar() {
         if(estaVacia()){ std::cout<<"Lista vacia."<<std::endl; return; }
-        std::cout<<"=== BIBLIOTECA DE LIBROS ==="<<std::endl;
+        std::cout<<"=== TIENDA DE ROPA ==="<<std::endl;
         for(int i=0;i<cantidad;i++){ std::cout<<"["<<i<<"] "; datos[i]->mostrarDatos(); }
     }
 };

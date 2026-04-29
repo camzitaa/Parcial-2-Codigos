@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Cola.h"
+#include "Lista.h"
 using namespace std;
 
 void burbuja(double* arr, int n) {
@@ -50,30 +50,31 @@ void ordenar(double* arr, int n){
 }
 
 int main() {
-    Cola est;
+    Lista est;
     int opcion;
 
     do {
-        std::cout<<"\n=== AGENDA DE CONTACTOS ==="<<std::endl;
+        std::cout<<"\n=== TIENDA DE ROPA ==="<<std::endl;
         std::cout<<"1. Agregar"<<std::endl;
         std::cout<<"2. Ver todos"<<std::endl;
         std::cout<<"3. Quitar/Atender"<<std::endl;
-        std::cout<<"4. Ordenar por edad"<<std::endl;
+        std::cout<<"4. Ordenar por precio"<<std::endl;
         std::cout<<"5. Salir"<<std::endl;
         std::cout<<"Opcion: "; std::cin>>opcion;
 
         if(opcion==1){
         std::string nombre; std::cout<<"nombre: "; std::cin>>nombre;
-        std::string telefono; std::cout<<"telefono: "; std::cin>>telefono;
-        std::string email; std::cout<<"email: "; std::cin>>email;
-        double edad; std::cout<<"edad: "; std::cin>>edad;
-            est.encolar(new Contacto(nombre, telefono, email, edad));
+        std::string talla; std::cout<<"talla: "; std::cin>>talla;
+        double precio; std::cout<<"precio: "; std::cin>>precio;
+        int cantidad; std::cout<<"cantidad: "; std::cin>>cantidad;
+            est.agregar(new Prenda(nombre, talla, precio, cantidad));
             std::cout<<"Registro agregado."<<std::endl;
         } else if(opcion==2){
             est.mostrar();
         } else if(opcion==3){
-        Contacto* e = est.desencolar();
-        if(e){ std::cout<<"Atendido: "<<std::endl; e->mostrarDatos(); delete e; }
+        est.mostrar();
+        int idx; std::cout<<"Indice a eliminar: "; std::cin>>idx;
+        est.eliminar(idx);
         } else if(opcion==4){
             double arr[50]; int n;
             est.copiarCampo(arr, n);
