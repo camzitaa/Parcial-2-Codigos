@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Cola.h"
+#include "Lista.h"
 using namespace std;
 
 void burbuja(double* arr, int n) {
@@ -50,30 +50,31 @@ void ordenar(double* arr, int n){
 }
 
 int main() {
-    Cola est;
+    Lista est;
     int opcion;
 
     do {
-        std::cout<<"\n=== SISTEMA DE CALIFICACIONES ==="<<std::endl;
+        std::cout<<"\n=== BIBLIOTECA DE LIBROS ==="<<std::endl;
         std::cout<<"1. Agregar"<<std::endl;
         std::cout<<"2. Ver todos"<<std::endl;
         std::cout<<"3. Quitar/Atender"<<std::endl;
-        std::cout<<"4. Ordenar por nota"<<std::endl;
+        std::cout<<"4. Ordenar por precio"<<std::endl;
         std::cout<<"5. Salir"<<std::endl;
         std::cout<<"Opcion: "; std::cin>>opcion;
 
         if(opcion==1){
-        std::string materia; std::cout<<"materia: "; std::cin>>materia;
-        std::string alumno; std::cout<<"alumno: "; std::cin>>alumno;
-        double nota; std::cout<<"nota: "; std::cin>>nota;
-        int semestre; std::cout<<"semestre: "; std::cin>>semestre;
-            est.encolar(new Calificacion(materia, alumno, nota, semestre));
+        std::string titulo; std::cout<<"titulo: "; std::cin>>titulo;
+        std::string autor; std::cout<<"autor: "; std::cin>>autor;
+        int anio; std::cout<<"anio: "; std::cin>>anio;
+        double precio; std::cout<<"precio: "; std::cin>>precio;
+            est.agregar(new Libro(titulo, autor, anio, precio));
             std::cout<<"Registro agregado."<<std::endl;
         } else if(opcion==2){
             est.mostrar();
         } else if(opcion==3){
-        Calificacion* e = est.desencolar();
-        if(e){ std::cout<<"Atendido: "<<std::endl; e->mostrarDatos(); delete e; }
+        est.mostrar();
+        int idx; std::cout<<"Indice a eliminar: "; std::cin>>idx;
+        est.eliminar(idx);
         } else if(opcion==4){
             double arr[50]; int n;
             est.copiarCampo(arr, n);
