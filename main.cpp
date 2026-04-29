@@ -1,12 +1,11 @@
 #include <iostream>
-#include "Pila.h"
+#include "Cola.h"
 using namespace std;
 
 void burbuja(double* arr, int n) {
     for(int i=0;i<n-1;i++) for(int j=0;j<n-i-1;j++)
         if(arr[j]>arr[j+1]){double t=arr[j];arr[j]=arr[j+1];arr[j+1]=t;}
 }
-
 void merge(double* arr, int izq, int mid, int der) {
     int n1=mid-izq+1,n2=der-mid;
     double* L=new double[n1]; double* R=new double[n2];
@@ -14,19 +13,16 @@ void merge(double* arr, int izq, int mid, int der) {
     for(int j=0;j<n2;j++) R[j]=arr[mid+1+j];
     int i=0,j=0,k=izq;
     while(i<n1&&j<n2) arr[k++]=(L[i]<=R[j])?L[i++]:R[j++];
-    while(i<n1) arr[k++]=L[i++];
-    while(j<n2) arr[k++]=R[j++];
+    while(i<n1) arr[k++]=L[i++]; while(j<n2) arr[k++]=R[j++];
     delete[] L; delete[] R;
 }
-
 void mergeSort(double* arr, int n) {
     for(int tam=1;tam<n;tam*=2)
         for(int izq=0;izq<n-tam;izq+=2*tam){
-            int mid=izq+tam-1,der=min(izq+2*tam-1,n-1);
+            int mid=izq+tam-1,der=std::min(izq+2*tam-1,n-1);
             merge(arr,izq,mid,der);
         }
 }
-
 void quickSort(double* arr, int n) {
     int* pila=new int[n]; int tope=-1;
     pila[++tope]=0; pila[++tope]=n-1;
@@ -42,47 +38,51 @@ void quickSort(double* arr, int n) {
     }
     delete[] pila;
 }
-
-void mostrarArr(double* arr, int n){for(int i=0;i<n;i++) cout<<arr[i]<<" "; cout<<endl;}
+void mostrarArr(double* arr, int n){for(int i=0;i<n;i++) std::cout<<arr[i]<<" "; std::cout<<std::endl;}
+void ordenar(double* arr, int n){
+    if(n==0){std::cout<<"Sin datos para ordenar."<<std::endl;return;}
+    double c1[50],c2[50];
+    for(int i=0;i<n;i++){c1[i]=arr[i];c2[i]=arr[i];}
+    std::cout<<"Original:  "; mostrarArr(arr,n);
+    burbuja(arr,n);   std::cout<<"Burbuja:   "; mostrarArr(arr,n);
+    mergeSort(c1,n);  std::cout<<"MergeSort: "; mostrarArr(c1,n);
+    quickSort(c2,n);  std::cout<<"QuickSort: "; mostrarArr(c2,n);
+}
 
 int main() {
-    Pila pila;
-    int opcion, contador = 1;
+    Cola est;
+    int opcion;
 
     do {
-        cout << "\n=== REGISTRO DE EMPLEADOS ===" << endl;
-        cout << "1. Agregar empleado" << endl;
-        cout << "2. Ver todos los empleados" << endl;
-        cout << "3. Quitar ultimo empleado" << endl;
-        cout << "4. Ordenar por sueldo" << endl;
-        cout << "5. Salir" << endl;
-        cout << "Opcion: "; cin >> opcion;
+        std::cout<<"\n=== SISTEMA DE CALIFICACIONES ==="<<std::endl;
+        std::cout<<"1. Agregar"<<std::endl;
+        std::cout<<"2. Ver todos"<<std::endl;
+        std::cout<<"3. Quitar/Atender"<<std::endl;
+        std::cout<<"4. Ordenar por nota"<<std::endl;
+        std::cout<<"5. Salir"<<std::endl;
+        std::cout<<"Opcion: "; std::cin>>opcion;
 
-        if (opcion == 1) {
-            string nombre, puesto; double sueldo;
-            cout << "Nombre: "; cin >> nombre;
-            cout << "Puesto: "; cin >> puesto;
-            cout << "Sueldo: "; cin >> sueldo;
-            pila.push(new Empleado(nombre, sueldo, puesto, contador++));
-            cout << "Empleado agregado." << endl;
-        } else if (opcion == 2) {
-            pila.mostrar();
-        } else if (opcion == 3) {
-            Empleado* e = pila.pop();
-            if (e) { cout << "Empleado removido: "; e->mostrarDatos(); delete e; }
-        } else if (opcion == 4) {
+        if(opcion==1){
+        std::string materia; std::cout<<"materia: "; std::cin>>materia;
+        std::string alumno; std::cout<<"alumno: "; std::cin>>alumno;
+        double nota; std::cout<<"nota: "; std::cin>>nota;
+        int semestre; std::cout<<"semestre: "; std::cin>>semestre;
+            est.encolar(new Calificacion(materia, alumno, nota, semestre));
+            std::cout<<"Registro agregado."<<std::endl;
+        } else if(opcion==2){
+            est.mostrar();
+        } else if(opcion==3){
+        Calificacion* e = est.desencolar();
+        if(e){ std::cout<<"Atendido: "<<std::endl; e->mostrarDatos(); delete e; }
+        } else if(opcion==4){
             double arr[50]; int n;
-            pila.copiarSueldos(arr, n);
-            if(n==0){cout<<"Sin empleados."<<endl;continue;}
-            double c1[50],c2[50];
-            for(int i=0;i<n;i++){c1[i]=arr[i];c2[i]=arr[i];}
-            cout<<"Original:  "; mostrarArr(arr,n);
-            burbuja(arr,n);   cout<<"Burbuja:   "; mostrarArr(arr,n);
-            mergeSort(c1,n);  cout<<"MergeSort: "; mostrarArr(c1,n);
-            quickSort(c2,n);  cout<<"QuickSort: "; mostrarArr(c2,n);
-        } else if(opcion!=5) cout<<"Opcion invalida."<<endl;
-    } while(opcion != 5);
+            est.copiarCampo(arr, n);
+            ordenar(arr, n);
+        } else if(opcion!=5){
+            std::cout<<"Opcion invalida."<<std::endl;
+        }
+    } while(opcion!=5);
 
-    cout << "Hasta luego." << endl;
+    std::cout<<"Hasta luego."<<std::endl;
     return 0;
 }

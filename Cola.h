@@ -1,48 +1,36 @@
 #pragma once
-#include "Alumno.h"
-using namespace std;
+#include "Calificacion.h"
 
 // COLA estatica con arreglo
 class Cola {
 private:
     static const int MAX = 50;
-    Alumno* datos[MAX];
+    Calificacion* datos[MAX];
     int frente, fin, cantidad;
 public:
     Cola() : frente(0), fin(0), cantidad(0) {}
 
-    void encolar(Alumno* a) {
-        if (cantidad < MAX) {
-            datos[fin] = a;
-            fin = (fin + 1) % MAX;
-            cantidad++;
-        } else cout << "Cola llena." << endl;
+    void encolar(Calificacion* e) {
+        if(cantidad < MAX){ datos[fin]=e; fin=(fin+1)%MAX; cantidad++; }
+        else std::cout<<"Cola llena."<<std::endl;
     }
 
-    Alumno* desencolar() {
-        if (!estaVacia()) {
-            Alumno* a = datos[frente];
-            frente = (frente + 1) % MAX;
-            cantidad--;
-            return a;
-        }
-        cout << "Cola vacia." << endl;
-        return nullptr;
+    Calificacion* desencolar() {
+        if(!estaVacia()){ Calificacion* e=datos[frente]; frente=(frente+1)%MAX; cantidad--; return e; }
+        std::cout<<"Cola vacia."<<std::endl; return nullptr;
     }
 
-    bool estaVacia() { return cantidad == 0; }
+    bool estaVacia() { return cantidad==0; }
     int obtenerCantidad() { return cantidad; }
 
-    void copiarPromedios(double* arr, int& n) {
+    void copiarCampo(double* arr, int& n) {
         n = cantidad;
-        for (int i = 0; i < cantidad; i++)
-            arr[i] = datos[(frente + i) % MAX]->getPromedio();
+        for(int i=0;i<cantidad;i++) arr[i]=datos[(frente+i)%MAX]->getNota();
     }
 
     void mostrar() {
-        if (estaVacia()) { cout << "Cola vacia." << endl; return; }
-        cout << "=== Lista de Alumnos ===" << endl;
-        for (int i = 0; i < cantidad; i++)
-            datos[(frente + i) % MAX]->mostrarDatos();
+        if(estaVacia()){ std::cout<<"Cola vacia."<<std::endl; return; }
+        std::cout<<"=== SISTEMA DE CALIFICACIONES ==="<<std::endl;
+        for(int i=0;i<cantidad;i++) datos[(frente+i)%MAX]->mostrarDatos();
     }
 };
