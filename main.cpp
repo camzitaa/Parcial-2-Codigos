@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Lista.h"
+#include "Pila.h"
 using namespace std;
 
 void burbuja(double* arr, int n) {
@@ -50,11 +50,11 @@ void ordenar(double* arr, int n){
 }
 
 int main() {
-    Lista est;
+    Pila est;
     int opcion;
 
     do {
-        std::cout<<"\n=== BIBLIOTECA DE LIBROS ==="<<std::endl;
+        std::cout<<"\n=== REGISTRO DE AUTOS ==="<<std::endl;
         std::cout<<"1. Agregar"<<std::endl;
         std::cout<<"2. Ver todos"<<std::endl;
         std::cout<<"3. Quitar/Atender"<<std::endl;
@@ -63,18 +63,17 @@ int main() {
         std::cout<<"Opcion: "; std::cin>>opcion;
 
         if(opcion==1){
-        std::string titulo; std::cout<<"titulo: "; std::cin>>titulo;
-        std::string autor; std::cout<<"autor: "; std::cin>>autor;
+        std::string marca; std::cout<<"marca: "; std::cin>>marca;
+        std::string modelo; std::cout<<"modelo: "; std::cin>>modelo;
         int anio; std::cout<<"anio: "; std::cin>>anio;
         double precio; std::cout<<"precio: "; std::cin>>precio;
-            est.agregar(new Libro(titulo, autor, anio, precio));
+            est.push(new Auto(marca, modelo, anio, precio));
             std::cout<<"Registro agregado."<<std::endl;
         } else if(opcion==2){
             est.mostrar();
         } else if(opcion==3){
-        est.mostrar();
-        int idx; std::cout<<"Indice a eliminar: "; std::cin>>idx;
-        est.eliminar(idx);
+        Auto* e = est.pop();
+        if(e){ std::cout<<"Removido: "<<std::endl; e->mostrarDatos(); delete e; }
         } else if(opcion==4){
             double arr[50]; int n;
             est.copiarCampo(arr, n);
