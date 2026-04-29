@@ -1,37 +1,38 @@
 #pragma once
-#include <iostream>
+#include "Empleado.h"
 using namespace std;
 
+// PILA estatica con arreglo
 class Pila {
 private:
     static const int MAX = 50;
-    double datos[MAX];
+    Empleado* datos[MAX];
     int tope;
 public:
     Pila() : tope(-1) {}
 
-    void push(double valor) {
-        if (tope < MAX - 1) datos[++tope] = valor;
+    void push(Empleado* e) {
+        if (tope < MAX - 1) datos[++tope] = e;
         else cout << "Pila llena." << endl;
     }
 
-    double pop() {
+    Empleado* pop() {
         if (!estaVacia()) return datos[tope--];
         cout << "Pila vacia." << endl;
-        return 0;
+        return nullptr;
     }
 
     bool estaVacia() { return tope == -1; }
+    int obtenerCantidad() { return tope + 1; }
 
-    void copiarA(double* arr, int& n) {
+    void copiarSueldos(double* arr, int& n) {
         n = tope + 1;
-        for (int i = 0; i <= tope; i++) arr[i] = datos[i];
+        for (int i = 0; i <= tope; i++) arr[i] = datos[i]->getSueldo();
     }
 
     void mostrar() {
         if (estaVacia()) { cout << "Pila vacia." << endl; return; }
-        cout << "=== Historial ===" << endl;
-        for (int i = tope; i >= 0; i--)
-            cout << "  [" << i << "] " << datos[i] << endl;
+        cout << "=== Registro de Empleados ===" << endl;
+        for (int i = tope; i >= 0; i--) datos[i]->mostrarDatos();
     }
 };

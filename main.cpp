@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Lista.h"
+#include "Pila.h"
 using namespace std;
 
 void burbuja(double* arr, int n) {
@@ -46,36 +46,34 @@ void quickSort(double* arr, int n) {
 void mostrarArr(double* arr, int n){for(int i=0;i<n;i++) cout<<arr[i]<<" "; cout<<endl;}
 
 int main() {
-    Lista lista;
-    int opcion;
+    Pila pila;
+    int opcion, contador = 1;
 
     do {
-        cout << "\n=== INVENTARIO DE PRODUCTOS ===" << endl;
-        cout << "1. Agregar producto" << endl;
-        cout << "2. Ver inventario" << endl;
-        cout << "3. Eliminar producto" << endl;
-        cout << "4. Ordenar por precio" << endl;
+        cout << "\n=== REGISTRO DE EMPLEADOS ===" << endl;
+        cout << "1. Agregar empleado" << endl;
+        cout << "2. Ver todos los empleados" << endl;
+        cout << "3. Quitar ultimo empleado" << endl;
+        cout << "4. Ordenar por sueldo" << endl;
         cout << "5. Salir" << endl;
         cout << "Opcion: "; cin >> opcion;
 
         if (opcion == 1) {
-            string nombre, categoria; double precio; int cantidad;
+            string nombre, puesto; double sueldo;
             cout << "Nombre: "; cin >> nombre;
-            cout << "Precio: "; cin >> precio;
-            cout << "Cantidad: "; cin >> cantidad;
-            cout << "Categoria: "; cin >> categoria;
-            lista.agregar(new Producto(nombre, precio, cantidad, categoria));
-            cout << "Producto agregado." << endl;
+            cout << "Puesto: "; cin >> puesto;
+            cout << "Sueldo: "; cin >> sueldo;
+            pila.push(new Empleado(nombre, sueldo, puesto, contador++));
+            cout << "Empleado agregado." << endl;
         } else if (opcion == 2) {
-            lista.mostrar();
+            pila.mostrar();
         } else if (opcion == 3) {
-            lista.mostrar();
-            int idx; cout << "Indice a eliminar: "; cin >> idx;
-            lista.eliminar(idx);
+            Empleado* e = pila.pop();
+            if (e) { cout << "Empleado removido: "; e->mostrarDatos(); delete e; }
         } else if (opcion == 4) {
             double arr[50]; int n;
-            lista.copiarPrecios(arr, n);
-            if(n==0){cout<<"Sin productos."<<endl;continue;}
+            pila.copiarSueldos(arr, n);
+            if(n==0){cout<<"Sin empleados."<<endl;continue;}
             double c1[50],c2[50];
             for(int i=0;i<n;i++){c1[i]=arr[i];c2[i]=arr[i];}
             cout<<"Original:  "; mostrarArr(arr,n);
