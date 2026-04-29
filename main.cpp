@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Pila.h"
+#include "Cola.h"
 using namespace std;
 
 void burbuja(double* arr, int n) {
@@ -50,30 +50,30 @@ void ordenar(double* arr, int n){
 }
 
 int main() {
-    Pila est;
+    Cola est;
     int opcion;
 
     do {
-        std::cout<<"\n=== REGISTRO DE PACIENTES ==="<<std::endl;
+        std::cout<<"\n=== SISTEMA BANCARIO ==="<<std::endl;
         std::cout<<"1. Agregar"<<std::endl;
         std::cout<<"2. Ver todos"<<std::endl;
         std::cout<<"3. Quitar/Atender"<<std::endl;
-        std::cout<<"4. Ordenar por edad"<<std::endl;
+        std::cout<<"4. Ordenar por saldo"<<std::endl;
         std::cout<<"5. Salir"<<std::endl;
         std::cout<<"Opcion: "; std::cin>>opcion;
 
         if(opcion==1){
-        std::string nombre; std::cout<<"nombre: "; std::cin>>nombre;
-        double edad; std::cout<<"edad: "; std::cin>>edad;
-        std::string diagnostico; std::cout<<"diagnostico: "; std::cin>>diagnostico;
-        int habitacion; std::cout<<"habitacion: "; std::cin>>habitacion;
-            est.push(new Paciente(nombre, edad, diagnostico, habitacion));
+        std::string titular; std::cout<<"titular: "; std::cin>>titular;
+        std::string numeroCuenta; std::cout<<"numeroCuenta: "; std::cin>>numeroCuenta;
+        double saldo; std::cout<<"saldo: "; std::cin>>saldo;
+        std::string tipo; std::cout<<"tipo: "; std::cin>>tipo;
+            est.encolar(new Cuenta(titular, numeroCuenta, saldo, tipo));
             std::cout<<"Registro agregado."<<std::endl;
         } else if(opcion==2){
             est.mostrar();
         } else if(opcion==3){
-        Paciente* e = est.pop();
-        if(e){ std::cout<<"Removido: "<<std::endl; e->mostrarDatos(); delete e; }
+        Cuenta* e = est.desencolar();
+        if(e){ std::cout<<"Atendido: "<<std::endl; e->mostrarDatos(); delete e; }
         } else if(opcion==4){
             double arr[50]; int n;
             est.copiarCampo(arr, n);
